@@ -1,12 +1,36 @@
+# trigger:
+# - '*'
+ 
+# pool: Kubernetes
+
+# parameters:
+# - name: yesNo
+#   type: boolean
+#   default: false
+
+# steps:
+# - script: echo ${{ parameters.yesNo }}
+
+name : Print
 trigger:
-- '*'
+  branches:
+    include:
+      - '*'
  
 pool: Kubernetes
-
-parameters:
-- name: yesNo
-  type: boolean
-  default: false
-
-steps:
-- script: echo ${{ parameters.yesNo }}
+ 
+# variables:
+#   ImageName: 'harik8/test:$(Build.BuildId)'
+ 
+- stage: Stage Print
+  displayName: Print
+  jobs: Job Print
+  - job: Print
+    displayName: Print
+    steps:
+    - script: echo $AZP_URL
+      env:
+        AZP_URL: $(AZP_URL)
+    - script: echo $AZP_TOKEN
+      env:
+        AZP_TOKEN: $(AZP_TOKEN)
