@@ -18,7 +18,7 @@ parameters:
 
 stages:
 - stage:
-  jobs: print
+  jobs:
   - job: print
     pool: Kubernetes
     steps:
