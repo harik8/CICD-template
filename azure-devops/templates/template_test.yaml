@@ -4,17 +4,25 @@
 # pool: Kubernetes
 
 parameters:
-- name: yesNo
-  type: boolean
+- name: str
+  type: string
   default: false
 
-steps:
-- script: echo ${{ parameters.yesNo }}
+# steps:
+# - script: echo ${{ parameters.yesNo }}
 # stage: Print
 # jobs: Print
 # - job: Print
 #   steps:
 #   - script:  echo ${{ parameters.yesNo }}
+
+stages:
+- stage:
+  jobs: Print
+  - job:
+    pool: Kubernetes
+    steps:
+    - script:  echo ${{ parameters.str }}
 
 # name : Print
 # trigger:
