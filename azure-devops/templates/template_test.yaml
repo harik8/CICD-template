@@ -1,8 +1,5 @@
-name : Build
 trigger:
-  branches:
-    include:
-      - '*'
+- '*'
  
 pool: Kubernetes
 
