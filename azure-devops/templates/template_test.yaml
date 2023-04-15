@@ -8,13 +8,13 @@ parameters:
   type: boolean
   default: false
 
-# steps:
-# - script: echo ${{ parameters.yesNo }}
-stage: Print
-jobs: Print
-- job: Print
-  steps:
-  - script:  echo ${{ parameters.yesNo }}
+steps:
+- script: echo ${{ parameters.yesNo }}
+# stage: Print
+# jobs: Print
+# - job: Print
+#   steps:
+#   - script:  echo ${{ parameters.yesNo }}
 
 # name : Print
 # trigger:
