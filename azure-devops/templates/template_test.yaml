@@ -1,7 +1,14 @@
-# File: simple-param.yml
+name : Build
+trigger:
+  branches:
+    include:
+      - '*'
+ 
+pool: Kubernetes
+
 parameters:
-- name: yesNo # name of the parameter; required
-  type: boolean # data type of the parameter; required
+- name: yesNo
+  type: boolean
   default: false
 
 steps:
