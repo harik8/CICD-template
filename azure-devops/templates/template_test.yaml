@@ -18,8 +18,8 @@ parameters:
 
 stages:
 - stage:
-  jobs: Print
-  - job:
+  jobs: print
+  - job: print
     pool: Kubernetes
     steps:
     - script:  echo ${{ parameters.str }}
