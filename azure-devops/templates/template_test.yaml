@@ -22,15 +22,15 @@ parameters:
 stages:
 - stage:
   jobs:
-  - job: print
+  - job: START
     pool: Kubernetes
     steps:
     - script:  echo ${{ parameters.str }}
-- stage: Build
-  displayName: Build image
-  jobs:
-  - job: Build
-    displayName: Build
+# - stage: Build
+#   displayName: Build image
+#   jobs:
+  - job: IMAGE BUILD
+    displayName: BUILD IMAGE
     pool: Kubernetes
     steps:
     - task: Docker@2
