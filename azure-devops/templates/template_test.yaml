@@ -20,7 +20,7 @@ stages:
           - task: Docker@2
             displayName: Build an image
             inputs:
-              imageName: harik8/test
+              repository: harik8/test
               containerRegistry: DockerHub
               command: buildAndPush
               dockerfile: "**/Dockerfile"
