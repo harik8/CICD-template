@@ -25,4 +25,4 @@ stages:
               command: buildAndPush
               dockerfile: "**/Dockerfile"
               tags: |
-                ${{ parameters.tag }}
+                 '$(Build.BuildId)'
