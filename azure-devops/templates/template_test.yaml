@@ -21,7 +21,7 @@ stages:
             displayName: Build an image
             inputs:
               imageName: harik8/test
-              command: build
+              command: buildAndPush
               dockerfile: "**/Dockerfile"
               tags: |
                 $(tag)
