@@ -25,4 +25,4 @@ stages:
               command: buildAndPush
               dockerfile: "**/Dockerfile"
               tags: |
-                 '$(Build.BuildId)'
+                 $(Build.BuildId)
