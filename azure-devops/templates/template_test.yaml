@@ -1,67 +1,26 @@
-# trigger:
-# - '*'
- 
-# pool: Kubernetes
-
+---
 parameters:
-- name: str
-  type: string
-  default: false
-- name: tag
-  type: string
-  default: latest
-
-# steps:
-# - script: echo ${{ parameters.yesNo }}
-# stage: Print
-# jobs: Print
-# - job: Print
-#   steps:
-#   - script:  echo ${{ parameters.yesNo }}
-
+  - name: str
+    type: string
+    default: false
+  - name: tag
+    type: string
+    default: latest
 stages:
-- stage:
-  jobs:
-  - job: START
-    pool: Kubernetes
-    steps:
-    - script:  echo ${{ parameters.str }}
-# - stage: Build
-#   displayName: Build image
-#   jobs:
-  - job: IMAGE BUILD
-    displayName: BUILD IMAGE
-    pool: Kubernetes
-    steps:
-    - task: Docker@2
-      displayName: Build an image
-      inputs:
-        command: build
-        dockerfile: '**/Dockerfile'
-        tags: |
-          $(tag)
-
-
-# name : Print
-# trigger:
-#   branches:
-#     include:
-#       - '*'
- 
-# pool: Kubernetes
- 
-# variables:
-#   ImageName: 'harik8/test:$(Build.BuildId)'
- 
-# stage: Stage Print
-# displayName: Print
-# jobs: Job Print
-# - job: Print
-#   displayName: Print
-#   steps:
-#   - script: echo $AZP_URL
-#     env:
-#       AZP_URL: $(AZP_URL)
-#   - script: echo $AZP_TOKEN
-#     env:
-#       AZP_TOKEN: $(AZP_TOKEN)
+  - stage:
+    jobs:
+      - job: START
+        pool: Kubernetes
+        steps:
+          - script: echo ${{ parameters.str }}
+      - job: IMAGE BUILD
+        displayName: BUILD IMAGE
+        pool: Kubernetes
+        steps:
+          - task: Docker@2
+            displayName: Build an image
+            inputs:
+              command: build
+              dockerfile: "**/Dockerfile"
+              tags: |
+                $(tag)
