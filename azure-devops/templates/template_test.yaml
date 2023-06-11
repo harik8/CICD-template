@@ -19,10 +19,11 @@ stages:
     value: $[variables.minor_version]
   - name: patch
     value: $[variables.patch_version]
-  ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
-    tag: $(major).$(minor).$(patch)
-  ${{ else }}:
-    tag: $(major).$(minor).$(patch)-${{ parameters.str }}
+  - name: tag
+    ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
+    value: $(major).$(minor).$(patch)
+    ${{ else }}:
+    value: $(major).$(minor).$(patch)-${{ parameters.str }}
   pool: Kubernetes
   jobs:
   - job: START
@@ -40,5 +41,5 @@ stages:
         command: buildAndPush
         dockerfile: "**/Dockerfile"
         tags: |
-          ${{variables.tag}}
+          $(tag)
 
