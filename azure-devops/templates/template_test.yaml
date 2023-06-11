@@ -1,4 +1,18 @@
 ---
+trigger:
+  tags:
+    include:
+      - v*
+  branches:
+    include:
+      - master
+      - develop
+      - release/*
+      - main
+pr:
+  - master
+  - develop
+  
 jobs:
   - job: BUILD
     variables:
