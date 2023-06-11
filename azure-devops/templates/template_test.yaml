@@ -49,7 +49,8 @@ stages:
     - task: HelmDeploy@0
       displayName: Package Helm
       inputs:
-        connectionType: none
+        connectionType: Kubernetes Service Connection
+        kubernetesServiceConnection: WSL-Minikube
         comamnd: package
         chartName: ${{ parameters.repo }}
         chartPath: ./helm
