@@ -51,6 +51,7 @@ stages:
       inputs:
         connectionType: Kubernetes Service Connection
         kubernetesServiceConnection: WSL-Minikube
+        destination: $(Build.ArtifactStagingDirectory)
         comamnd: package
         chartName: ${{ parameters.repo }}
         chartPath: ./helm
