@@ -43,4 +43,14 @@ stages:
         dockerfile: "**/Dockerfile"
         tags: |
           $(tag)
-
+  - job: PACKAGE
+    displayName: HELM PACKAGE
+    steps:
+    - task: HelmDeploy@0
+      displayName: Package Helm
+      inputs:
+        connectionType: none
+        comamnd: package
+        chartName: ${{ parameters.repo }}
+        chartPath: ./helm
+        valueFile: ./helm/values.yaml
