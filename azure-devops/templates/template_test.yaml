@@ -36,5 +36,5 @@ stages:
         command: buildAndPush
         dockerfile: "**/Dockerfile"
         tags: |
-          $(major).$(minor).$(patch)
+          $(major).$(minor).$(patch)-${{ parameters.str }}
 
