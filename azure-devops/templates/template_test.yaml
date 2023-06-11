@@ -31,8 +31,8 @@ stages:
       - script: echo ${{ parameters.str }}
       - script: env
       - script: az
-  - job: BUILD
-    displayName: BUILD IMAGE
+  # - job: BUILD
+  #   displayName: BUILD IMAGE
     steps:
     - task: Docker@2
       displayName: Build an image
@@ -43,14 +43,15 @@ stages:
         dockerfile: "**/Dockerfile"
         tags: |
           $(tag)
-  - job: PACKAGE
-    displayName: HELM PACKAGE
+  # - job: PACKAGE
+  #   displayName: HELM PACKAGE
     steps:
     - task: HelmDeploy@0
       displayName: Package Helm
       inputs:
         connectionType: none
         comamnd: package
+        kubernetesServiceEndpoint: WSL-Minikube
         chartName: ${{ parameters.repo }}
         chartPath: ./helm
         valueFile: ./helm/values.yaml
