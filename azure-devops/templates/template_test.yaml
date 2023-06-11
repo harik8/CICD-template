@@ -16,6 +16,8 @@ stages:
         steps:
           - script: echo ${{ parameters.str }}
           - script: env
+        variables:
+        - group: test
       - job: BUILD
         displayName: BUILD IMAGE
         pool: Kubernetes
