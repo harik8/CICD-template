@@ -1,13 +1,4 @@
 ---
-# parameters:
-#   - name: str
-#     type: string
-#     default: false
-#   - name: tag
-#     type: string
-#     default: latest
-#   - name: repo
-#     type: string
 jobs:
   - job: BUILD
     variables:
@@ -23,7 +14,16 @@ jobs:
           value: $(major).$(minor).$(patch)
         "${{ else }}":
           value: $(major).$(minor).$(patch)-${{ parameters.str }}
-    pool: Kubernetes
+    parameters:
+    - name: str
+      type: string
+      default: false
+    - name: tag
+      type: string
+      default: latest
+    - name: repo
+      type: string
+      pool: Kubernetes
     steps:
       - script: echo ${{ parameters.str }}
       - script: env
