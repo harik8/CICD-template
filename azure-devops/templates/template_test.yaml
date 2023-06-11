@@ -26,7 +26,7 @@ stages:
       value: $(major).$(minor).$(patch)-${{ parameters.str }}
   pool: Kubernetes
   jobs:
-  - job: BUILD AND PACKAGE - CI
+  - job: BUILD_AND_PACKAGE-CI
     steps:
       - script: echo ${{ parameters.str }}
       - script: env
