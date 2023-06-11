@@ -9,7 +9,6 @@ parameters:
   - name: repo
     type: string
 stages:
-  - pool: Kubernetes
   - stage:
     variables:
       - group: test
