@@ -19,11 +19,9 @@ stages:
     value: $[variables.minor_version]
   - name: patch
     value: $[variables.patch_version]
-  - name: tag
+  - tag: $(major).$(minor).$(patch)-${{ parameters.str }}
     ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
     value: $(major).$(minor).$(patch)
-    ${{ else }}:
-    value: $(major).$(minor).$(patch)-${{ parameters.str }}
   pool: Kubernetes
   jobs:
   - job: START
