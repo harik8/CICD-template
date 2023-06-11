@@ -9,6 +9,11 @@ parameters:
   - name: repo
     type: string
 
+
+trigger:
+- main
+- master
+
 pool: Kubernetes
 
 variables:
