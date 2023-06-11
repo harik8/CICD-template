@@ -13,6 +13,12 @@ stages:
 - stage:
   variables:
   - group: test
+  - name: major
+    value: $[variables.major_version]
+  - name: minor
+    value: $[variables.minor_version]
+  - name: patch
+    value: $[variables.patch_version]
   pool: Kubernetes
   jobs:
   - job: START
