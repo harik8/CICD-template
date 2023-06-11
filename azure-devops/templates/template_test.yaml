@@ -53,4 +53,5 @@ stages:
           chartName: ${{ parameters.repo }}
           chartPath: ./helm
           valueFile: ./helm/values.yaml
+          destination: '$(Build.ArtifactStagingDirectory)'
     
