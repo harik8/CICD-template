@@ -11,6 +11,8 @@ parameters:
 
 stages:
 - stage:
+  variables:
+  - group: test
   pool: Kubernetes
   jobs:
   - job: START
