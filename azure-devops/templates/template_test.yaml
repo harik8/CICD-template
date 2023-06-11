@@ -1,13 +1,13 @@
 ---
-parameters:
-  - name: str
-    type: string
-    default: false
-  - name: tag
-    type: string
-    default: latest
-  - name: repo
-    type: string
+# parameters:
+#   - name: str
+#     type: string
+#     default: false
+#   - name: tag
+#     type: string
+#     default: latest
+#   - name: repo
+#     type: string
 jobs:
   - job: BUILD
     variables:
