@@ -24,27 +24,27 @@ stages:
       value: $(major).$(minor).$(patch)
     ${{ else }}:
       value: $(major).$(minor).$(patch)-${{ parameters.str }}
-  pool: Kubernetes
-  steps:
-    - script: echo ${{ parameters.str }}
-    - script: env
-    - script: az
-  - task: Docker@2
-    displayName: Build an image
-    inputs:
-      repository: harik8/test
-      containerRegistry: DockerHub
-      command: buildAndPush
-      dockerfile: "**/Dockerfile"
-      tags: |
-        $(tag)
-  - task: HelmDeploy@0
-    displayName: Package Helm
-    inputs:
-      connectionType: Kubernetes Service Connection
-      kubernetesServiceConnection: WSL-Minikube
-      destination: $(Build.ArtifactStagingDirectory)
-      comamnd: package
-      chartName: ${{ parameters.repo }}
-      chartPath: ./helm
-      valueFile: ./helm/values.yaml
+pool: Kubernetes
+steps:
+  - script: echo ${{ parameters.str }}
+  - script: env
+  - script: az
+- task: Docker@2
+  displayName: Build an image
+  inputs:
+    repository: harik8/test
+    containerRegistry: DockerHub
+    command: buildAndPush
+    dockerfile: "**/Dockerfile"
+    tags: |
+      $(tag)
+- task: HelmDeploy@0
+  displayName: Package Helm
+  inputs:
+    connectionType: Kubernetes Service Connection
+    kubernetesServiceConnection: WSL-Minikube
+    destination: $(Build.ArtifactStagingDirectory)
+    comamnd: package
+    chartName: ${{ parameters.repo }}
+    chartPath: ./helm
+    valueFile: ./helm/values.yaml
