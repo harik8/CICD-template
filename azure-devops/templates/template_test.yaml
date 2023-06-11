@@ -30,7 +30,7 @@ stages:
     steps:
       - script: echo ${{ parameters.str }}
       - script: env
-      - scrot: az
+      - script: az
   - job: BUILD
     displayName: BUILD IMAGE
     steps:
