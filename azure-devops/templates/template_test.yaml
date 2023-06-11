@@ -10,24 +10,25 @@ parameters:
     type: string
 stages:
   - stage:
-    jobs:
-      - job: START
-        pool: Kubernetes
-        steps:
-          - script: echo ${{ parameters.str }}
-          - script: env
-        variables:
-        - group: test
-      - job: BUILD
-        displayName: BUILD IMAGE
-        pool: Kubernetes
-        steps:
-          - task: Docker@2
-            displayName: Build an image
-            inputs:
-              repository: harik8/test
-              containerRegistry: DockerHub
-              command: buildAndPush
-              dockerfile: "**/Dockerfile"
-              tags: |
-                ${{ parameters.tag }}-${{ parameters.str }}
+    variables:
+    - group: test
+    - job: START
+      pool: Kubernetes
+      steps:
+        - script: echo ${{ parameters.str }}
+        - script: env
+      variables:
+      - group: test
+    - job: BUILD
+      displayName: BUILD IMAGE
+      pool: Kubernetes
+      steps:
+        - task: Docker@2
+          displayName: Build an image
+          inputs:
+            repository: harik8/test
+            containerRegistry: DockerHub
+            command: buildAndPush
+            dockerfile: "**/Dockerfile"
+            tags: |
+              ${{ parameters.tag }}-${{ parameters.str }}
