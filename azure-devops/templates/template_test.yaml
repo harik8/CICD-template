@@ -8,6 +8,12 @@ parameters:
     default: latest
   - name: repo
     type: string
+    
+variables:
+  ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
+    tag: $(major).$(minor).$(patch)
+  ${{ else }}:
+    tag: $(major).$(minor).$(patch)-${{ parameters.str }}
 
 stages:
 - stage:
@@ -36,8 +42,5 @@ stages:
         command: buildAndPush
         dockerfile: "**/Dockerfile"
         tags: |
-          ${{ if eq(variables['Build.SourceBranchName'], 'main') }}: 
-              $(major).$(minor).$(patch)
-          ${{ else }}:: 
-              $(major).$(minor).$(patch)-${{ parameters.str }}
+          ${{variables.tag}}
 
