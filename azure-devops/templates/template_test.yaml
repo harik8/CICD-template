@@ -9,7 +9,7 @@ parameters:
   - name: repo
     type: string
     
-trigger: *
+trigger: '*'
 
 stages:
 - stage:
