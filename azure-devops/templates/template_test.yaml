@@ -12,11 +12,11 @@ stages:
   - stage:
     variables:
       - group: test
-      - job: START
-        pool: Kubernetes
-        steps:
-          - script: echo ${{ parameters.str }}
-          - script: env
+    - job: START
+      pool: Kubernetes
+      steps:
+        - script: echo ${{ parameters.str }}
+        - script: env
       - job: BUILD
         displayName: BUILD IMAGE
         steps:
