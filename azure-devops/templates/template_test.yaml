@@ -9,14 +9,6 @@ parameters:
   - name: repo
     type: string
 stages:
-  variables:
-  - group: ${{ parameters.repo }}
-  - name: major
-    value: '1'
-  - name: minor
-    value: '0'
-  - name: patch
-    value: '0'
   - stage:
     jobs:
       - job: START
