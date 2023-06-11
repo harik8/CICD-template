@@ -36,5 +36,8 @@ stages:
         command: buildAndPush
         dockerfile: "**/Dockerfile"
         tags: |
-          $(major).$(minor).$(patch)-${{ parameters.str }}
+          ${{ if eq(variables['Build.SourceBranchName'], 'main') }}: 
+              $(major).$(minor).$(patch)
+          ${{ else }}:: 
+              $(major).$(minor).$(patch)-${{ parameters.str }}
 
