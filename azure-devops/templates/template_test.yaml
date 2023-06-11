@@ -8,25 +8,27 @@ parameters:
     default: latest
   - name: repo
     type: string
+    
+trigger: *
+
 stages:
-  - stage:
-    variables:
-      - group: test
-    - job: START
-      pool: Kubernetes
-      steps:
-        - script: echo ${{ parameters.str }}
-        - script: env
-      - job: BUILD
-        displayName: BUILD IMAGE
-        steps:
-          - task: Docker@2
-            displayName: Build an image
-            inputs:
-              repository: harik8/test
-              containerRegistry: DockerHub
-              command: buildAndPush
-              dockerfile: "**/Dockerfile"
-              tags: |
-                ${{ parameters.tag }}-${{ parameters.str }}
+- stage:
+  pool: Kubernetes
+  jobs:
+  - job: START
+    steps:
+      - script: echo ${{ parameters.str }}
+      - script: env
+  - job: BUILD
+    displayName: BUILD IMAGE
+    steps:
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        repository: harik8/test
+        containerRegistry: DockerHub
+        command: buildAndPush
+        dockerfile: "**/Dockerfile"
+        tags: |
+          ${{ parameters.tag }}-${{ parameters.str }}
 
