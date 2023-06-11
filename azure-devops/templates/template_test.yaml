@@ -9,22 +9,22 @@ parameters:
   - name: repo
     type: string
 
-stages:
-- stage:
-  variables:
-  - group: test
-  - name: major
-    value: $[variables.major_version]
-  - name: minor
-    value: $[variables.minor_version]
-  - name: patch
-    value: $[variables.patch_version]
-  - name: tag
-    ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
-      value: $(major).$(minor).$(patch)
-    ${{ else }}:
-      value: $(major).$(minor).$(patch)-${{ parameters.str }}
 pool: Kubernetes
+
+variables:
+- group: test
+- name: major
+  value: $[variables.major_version]
+- name: minor
+  value: $[variables.minor_version]
+- name: patch
+  value: $[variables.patch_version]
+- name: tag
+  ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
+    value: $(major).$(minor).$(patch)
+  ${{ else }}:
+    value: $(major).$(minor).$(patch)-${{ parameters.str }}
+
 steps:
   - script: echo ${{ parameters.str }}
   - script: env
