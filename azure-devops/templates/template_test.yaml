@@ -26,4 +26,4 @@ stages:
               command: buildAndPush
               dockerfile: "**/Dockerfile"
               tags: |
-                ${{ parameters.tag }}
+                ${{ parameters.tag }}-${{ parameters.str }}
