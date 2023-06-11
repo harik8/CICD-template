@@ -45,7 +45,6 @@ stages:
           $(tag)
   # - job: PACKAGE
   #   displayName: HELM PACKAGE
-    steps:
     - task: HelmDeploy@0
       displayName: Package Helm
       inputs:
