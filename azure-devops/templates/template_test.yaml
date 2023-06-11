@@ -19,7 +19,9 @@ stages:
     value: $[variables.minor_version]
   - name: patch
     value: $[variables.patch_version]
-  - tag: $(major).$(minor).$(patch)-${{ parameters.str }}
+  - name: tag
+    value: $(major).$(minor).$(patch)-${{ parameters.str }}
+  - name: tag
     ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
     value: $(major).$(minor).$(patch)
   pool: Kubernetes
