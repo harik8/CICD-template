@@ -1,61 +1,57 @@
 ---
-trigger:
-  tags:
-    include:
-      - v*
-  branches:
-    include:
-      - master
-      - develop
-      - release/*
-      - main
-pr:
-  - master
-  - develop
-  
-jobs:
-  - job: BUILD
-    variables:
-      - group: test
-      - name: major
-        value: $[variables.major_version]
-      - name: minor
-        value: $[variables.minor_version]
-      - name: patch
-        value: $[variables.patch_version]
-      - name: tag
-        "${{ if eq(variables['Build.SourceBranchName'], 'main') }}":
-          value: $(major).$(minor).$(patch)
-        "${{ else }}":
-          value: $(major).$(minor).$(patch)-${{ parameters.str }}
-    parameters:
-    - name: str
-      type: string
-      default: false
-    - name: tag
-      type: string
-      default: latest
-    - name: repo
-      type: string
-      pool: Kubernetes
+parameters:
+  - name: str
+    type: string
+    default: false
+  - name: tag
+    type: string
+    default: latest
+  - name: repo
+    type: string
+
+stages:
+- stage:
+  variables:
+  - group: test
+  - name: major
+    value: $[variables.major_version]
+  - name: minor
+    value: $[variables.minor_version]
+  - name: patch
+    value: $[variables.patch_version]
+  - name: tag
+    ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
+      value: $(major).$(minor).$(patch)
+    ${{ else }}:
+      value: $(major).$(minor).$(patch)-${{ parameters.str }}
+  pool: Kubernetes
+  jobs:
+  - job: START
     steps:
       - script: echo ${{ parameters.str }}
       - script: env
       - script: az
-      - task: Docker@2
-        displayName: Build an image
-        inputs:
-          repository: harik8/test
-          containerRegistry: DockerHub
-          command: buildAndPush
-          dockerfile: "**/Dockerfile"
-          tags: |
-            $(tag)
-      - task: HelmDeploy@0
-        displayName: Package Helm
-        inputs:
-          connectionType: none
-          comamnd: package
-          chartName: ${{ parameters.repo }}
-          chartPath: ./helm
-          valueFile: ./helm/values.yaml
+  - job: BUILD
+    displayName: BUILD IMAGE
+    steps:
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        repository: harik8/test
+        containerRegistry: DockerHub
+        command: buildAndPush
+        dockerfile: "**/Dockerfile"
+        tags: |
+          $(tag)
+  - job: PACKAGE
+    displayName: HELM PACKAGE
+    steps:
+    - task: HelmDeploy@0
+      displayName: Package Helm
+      inputs:
+        connectionType: none
+        comamnd: package
+        chartName: ${{ parameters.repo }}
+        chartPath: ./helm
+        valueFile: ./helm/values.yaml
+    
