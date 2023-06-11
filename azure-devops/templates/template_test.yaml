@@ -8,12 +8,6 @@ parameters:
     default: latest
   - name: repo
     type: string
-    
-variables:
-  ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
-    tag: $(major).$(minor).$(patch)
-  ${{ else }}:
-    tag: $(major).$(minor).$(patch)-${{ parameters.str }}
 
 stages:
 - stage:
@@ -25,6 +19,10 @@ stages:
     value: $[variables.minor_version]
   - name: patch
     value: $[variables.patch_version]
+  ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
+    tag: $(major).$(minor).$(patch)
+  ${{ else }}:
+    tag: $(major).$(minor).$(patch)-${{ parameters.str }}
   pool: Kubernetes
   jobs:
   - job: START
