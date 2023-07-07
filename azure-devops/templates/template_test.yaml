@@ -39,9 +39,12 @@ stages:
         inputs:
           targetType: 'inline'
           script: |
-            echo $(Build.SourcesDirectory)
-            echo "Artifact name value is " $ArtifactName
-            echo "##vso[task.setvariable variable=testVar;]TESTVAR"
+            X=0
+            if [[ X -gt 0 ]];then
+              echo "##vso[task.setvariable variable=testVar;]TEST1"
+            else
+               echo "##vso[task.setvariable variable=testVar;]TEST0"
+            fi
 
       - task: Bash@3
         inputs:
