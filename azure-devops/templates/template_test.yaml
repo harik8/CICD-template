@@ -57,11 +57,11 @@ stages:
             done
 
             if [[ $CI_COUNT -eq 0 && $CD_COUNT -gt 0 ]]; then
-              echo "SKIP CI"
-              echo "##vso[task.setvariable variable=skipCI]true1"
+              echo "No CI changes. Skipping CI."
+              echo "##vso[task.setvariable variable=skipCI]true"
             else
-              echo "DON'T SKIP CI"
-              echo "##vso[task.setvariable variable=skipCI]false1"
+              echo "Found CI and CD changes."
+              echo "##vso[task.setvariable variable=skipCI]false"
             fi
         displayName: Get Modified Files
         
@@ -70,6 +70,10 @@ stages:
           targetType: 'inline'
           script: |
             echo $(skipCI)
+
+      - bash: echo "Building CI..."
+        condition: eq(variables['skipCI'], 'false')
+        displayName: Condition Bash
         
       # - bash: |
       #     MANIFEST_PATH="helm"
@@ -100,17 +104,17 @@ stages:
 
       #     echo "RUN CI STATUS - $(SKIP_CI)"
       #   displayName: Get Modified Files
-  # # - job: BUILD
-  # #   displayName: BUILD IMAGE
-  #     - task: Docker@2
-  #       displayName: Build an image
-  #       inputs:
-  #         repository: harik8/test
-  #         containerRegistry: DockerHub
-  #         command: buildAndPush
-  #         dockerfile: "**/Dockerfile"
-  #         tags: |
-  #           $(tag)
+  # - job: BUILD
+  #   displayName: BUILD IMAGE
+      - task: Docker@2
+        displayName: Build an image
+        inputs:
+          repository: harik8/test
+          containerRegistry: DockerHub
+          command: buildAndPush
+          dockerfile: "**/Dockerfile"
+          tags: |
+            $(tag)
   # # - job: PACKAGE
   # #   displayName: HELM PACKAGE
   #     - task: HelmDeploy@0
