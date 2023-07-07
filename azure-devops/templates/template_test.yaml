@@ -34,36 +34,50 @@ stages:
 
       - checkout: self
         fetchDepth: 2
+
+      - task: Bash@3
+        inputs:
+          targetType: 'inline'
+          script: |
+            echo $(Build.SourcesDirectory)
+            echo "Artifact name value is " $ArtifactName
+            echo "##vso[task.setvariable variable=testVar;]TESTVAR"
+
+      - task: Bash@3
+        inputs:
+          targetType: 'inline'
+          script: |
+            echo $(testVar)
         
-      - bash: |
-          MANIFEST_PATH="helm"
-          MODIFIED_FILES=$(git diff HEAD HEAD~ --name-only)
+      # - bash: |
+      #     MANIFEST_PATH="helm"
+      #     MODIFIED_FILES=$(git diff HEAD HEAD~ --name-only)
           
-          CI_COUNT=0
-          CD_COUNT=0
-          SKIP_CI=false
+      #     CI_COUNT=0
+      #     CD_COUNT=0
+      #     SKIP_CI=false
 
-          for FILE in $MODIFIED_FILES
-          do
-            if [[ $FILE == *$MANIFEST_PATH* ]]; then
-              echo "CD [${FILE}] has changed"
-              CD_COUNT=$(($CD_COUNT+1))
-            else
-              echo "CI [${FILE}] has changed"
-              CI_COUNT=$(($CI_COUNT+1))
-            fi
-          done
+      #     for FILE in $MODIFIED_FILES
+      #     do
+      #       if [[ $FILE == *$MANIFEST_PATH* ]]; then
+      #         echo "CD [${FILE}] has changed"
+      #         CD_COUNT=$(($CD_COUNT+1))
+      #       else
+      #         echo "CI [${FILE}] has changed"
+      #         CI_COUNT=$(($CI_COUNT+1))
+      #       fi
+      #     done
 
-          if [[ $CI_COUNT -eq 0 && $CD_COUNT -gt 0 ]]; then
-            echo "SKIP CI - $SKIP_CI"
-            echo "##vso[task.setvariable variable=SKIP_CI]false"
-          else
-            echo "SKIP CI - $SKIP_CI"
-            echo "##vso[task.setvariable variable=SKIP_CI]true"
-          fi
+      #     if [[ $CI_COUNT -eq 0 && $CD_COUNT -gt 0 ]]; then
+      #       echo "SKIP CI - $SKIP_CI"
+      #       echo "##vso[task.setvariable variable=SKIP_CI]false"
+      #     else
+      #       echo "SKIP CI - $SKIP_CI"
+      #       echo "##vso[task.setvariable variable=SKIP_CI]true"
+      #     fi
 
-          echo "RUN CI STATUS - $(SKIP_CI)"
-        displayName: Get Modified Files
+      #     echo "RUN CI STATUS - $(SKIP_CI)"
+      #   displayName: Get Modified Files
   # # - job: BUILD
   # #   displayName: BUILD IMAGE
   #     - task: Docker@2
