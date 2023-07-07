@@ -64,28 +64,28 @@ stages:
 
           echo "RUN CI STATUS - $(SKIP_CI)"
         displayName: Get Modified Files
-  # - job: BUILD
-  #   displayName: BUILD IMAGE
-      - task: Docker@2
-        displayName: Build an image
-        inputs:
-          repository: harik8/test
-          containerRegistry: DockerHub
-          command: buildAndPush
-          dockerfile: "**/Dockerfile"
-          tags: |
-            $(tag)
-  # - job: PACKAGE
-  #   displayName: HELM PACKAGE
-      - task: HelmDeploy@0
-        displayName: Package Helm
-        inputs:
-          connectionType: none
-          comamnd: package
-          kubernetesServiceEndpoint: WSL-Minikube
-          chartName: ${{ parameters.repo }}
-          chartPath: ./helm
-          valueFile: ./helm/values.yaml
-          destination: '$(Build.ArtifactStagingDirectory)'
-      - script: ls -lah  $(Build.ArtifactStagingDirectory)
+  # # - job: BUILD
+  # #   displayName: BUILD IMAGE
+  #     - task: Docker@2
+  #       displayName: Build an image
+  #       inputs:
+  #         repository: harik8/test
+  #         containerRegistry: DockerHub
+  #         command: buildAndPush
+  #         dockerfile: "**/Dockerfile"
+  #         tags: |
+  #           $(tag)
+  # # - job: PACKAGE
+  # #   displayName: HELM PACKAGE
+  #     - task: HelmDeploy@0
+  #       displayName: Package Helm
+  #       inputs:
+  #         connectionType: none
+  #         comamnd: package
+  #         kubernetesServiceEndpoint: WSL-Minikube
+  #         chartName: ${{ parameters.repo }}
+  #         chartPath: ./helm
+  #         valueFile: ./helm/values.yaml
+  #         destination: '$(Build.ArtifactStagingDirectory)'
+  #     - script: ls -lah  $(Build.ArtifactStagingDirectory)
     
