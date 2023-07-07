@@ -72,7 +72,7 @@ stages:
             echo $(skipCI)
 
       - bash: echo "Building CI..."
-        condition: eq(variables['skipCI'], 'false')
+        condition: eq(variables['skipCI'], 'true')
         displayName: Condition Bash
         
       # - bash: |
