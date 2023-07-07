@@ -69,7 +69,7 @@ stages:
         inputs:
           targetType: 'inline'
           script: |
-            echo $(SKIP_CI)
+            echo $(skipCI)
         
       # - bash: |
       #     MANIFEST_PATH="helm"
