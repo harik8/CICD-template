@@ -8,6 +8,7 @@ parameters:
     default: latest
   - name: repo
     type: string
+    default: test
 
 stages:
 - stage:
